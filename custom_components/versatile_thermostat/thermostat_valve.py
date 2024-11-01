@@ -103,6 +103,7 @@ class ThermostatOverValve(BaseThermostat[UnderlyingValve]):  # pylint: disable=a
             self._cycle_min,
             self._minimal_activation_delay,
             self.name,
+            self._output_time_modifier,
         )
 
         lst_valves = [config_entry.get(CONF_VALVE)]

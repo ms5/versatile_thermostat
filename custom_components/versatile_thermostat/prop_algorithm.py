@@ -31,6 +31,7 @@ class PropAlgorithm:
         cycle_min: int,
         minimal_activation_delay: int,
         vtherm_entity_id: str = None,
+        output_time_modifier: int = 0,
     ) -> None:
         """Initialisation of the Proportional Algorithm"""
         _LOGGER.debug(
@@ -78,6 +79,7 @@ class PropAlgorithm:
         self._off_time_sec = self._cycle_min * 60
         self._security = False
         self._default_on_percent = 0
+        self._output_time_modifier = output_time_modifier
 
     def calculate(
         self,
@@ -161,7 +163,7 @@ class PropAlgorithm:
             )
             self._on_percent = self._calculated_on_percent
 
-        self._on_time_sec = self._on_percent * self._cycle_min * 60
+        self._on_time_sec = self._on_percent * self._cycle_min * 60 * float(self._output_time_modifier or 1)
 
         # Do not heat for less than xx sec
         if self._on_time_sec < self._minimal_activation_delay:

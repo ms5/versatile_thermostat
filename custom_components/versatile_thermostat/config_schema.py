@@ -342,6 +342,7 @@ STEP_CENTRAL_ADVANCED_DATA_SCHEMA = vol.Schema(  # pylint: disable=invalid-name
             CONF_SECURITY_DEFAULT_ON_PERCENT,
             default=DEFAULT_SECURITY_DEFAULT_ON_PERCENT,
         ): vol.Coerce(float),
+        vol.Required(CONF_OUTPUT_TIME_MODIFIER, default=1): cv.small_float,
     }
 )
 

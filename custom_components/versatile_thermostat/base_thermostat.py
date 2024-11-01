@@ -127,6 +127,7 @@ from .const import (
     CENTRAL_MODE_COOL_ONLY,
     CENTRAL_MODE_FROST_PROTECTION,
     send_vtherm_event,
+    CONF_OUTPUT_TIME_MODIFIER,
 )
 
 from .config_schema import *  # pylint: disable=wildcard-import, unused-wildcard-import
@@ -180,6 +181,7 @@ class BaseThermostat(ClimateEntity, RestoreEntity, Generic[T]):
                     "last_temperature_datetime",
                     "last_ext_temperature_datetime",
                     "minimal_activation_delay_sec",
+                    "output_time_modifier"
                     "device_power",
                     "mean_cycle_power",
                     "last_update_datetime",
@@ -517,6 +519,7 @@ class BaseThermostat(ClimateEntity, RestoreEntity, Generic[T]):
             else DEFAULT_SECURITY_DEFAULT_ON_PERCENT
         )
         self._minimal_activation_delay = entry_infos.get(CONF_MINIMAL_ACTIVATION_DELAY)
+        self._output_time_modifier = entry_infos.get(CONF_OUTPUT_TIME_MODIFIER)
         self._last_temperature_measure = datetime.now(tz=self._current_tz)
         self._last_ext_temperature_measure = datetime.now(tz=self._current_tz)
         self._security_state = False
@@ -2622,6 +2625,7 @@ class BaseThermostat(ClimateEntity, RestoreEntity, Generic[T]):
             ).isoformat(),
             "security_state": self._security_state,
             "minimal_activation_delay_sec": self._minimal_activation_delay,
+            "output_time_modifier": self._output_time_modifier,
             "device_power": self._device_power,
             ATTR_MEAN_POWER_CYCLE: self.mean_cycle_power,
             ATTR_TOTAL_ENERGY: self.total_energy,
